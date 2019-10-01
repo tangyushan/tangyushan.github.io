@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>中学排课系统</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+
+        <link rel="stylesheet" href="css/style.css">
+        
+        <script src="js/schoolclass.js"></script>
+        <script src="js/coursetable.js"></script>
+        <script src="js/teacher.js"></script>
+        <script src="js/grade.js"></script>
+        
+        <script src="js/coursesarrange.js"></script>
+        
+        <script src="js/debug.js"></script>
+        
+    </head>
+    <body>
+        <h1>中学排课系统</h1>
+        <table id="course-table-1">
+            <caption>初一(1)班课程安排表（排课用）</caption>
+            <thead>
+                <tr><th>时段</th><th>课序</th><th>时间</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th></tr>
+            </thead>
+            <tbody>
+                <tr><th rowspan="11">上午</th><td rowspan="2">1</td><td class="class-time" rowspan="2">07:30 — 08:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">2</td><td class="class-time" rowspan="2">08:20 — 09:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td colspan="7" class="seperate-class-cell">课 间 操 (9:00 — 9:25)</td></tr>
+                
+                <tr><td rowspan="2">3</td><td class="class-time" rowspan="2">09:25 — 10:05</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">4</td><td class="class-time" rowspan="2">10:15 — 10:55</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">5</td><td class="class-time" rowspan="2">11:05 — 11:45</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td colspan="8" class="seperate-class-cell">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;午 休 (12:00 — 14:30)</td></tr>
+                
+                <tr><th rowspan="6">下午</th><td rowspan="2">6</td><td class="class-time" rowspan="2">14:40 — 15:20</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">7</td><td class="class-time" rowspan="2">15:30 — 16:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">8</td><td class="class-time" rowspan="2">16:30 — 17:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+        
+        <p></p>
+        
+        <table id="debug-table">
+            <caption>Debug Table</caption>
+            <thead>
+                <tr><th>时段</th><th>课序</th><th>时间</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th></tr>
+            </thead>
+            <tbody>
+                <tr><th rowspan="11">上午</th><td rowspan="2">1</td><td class="class-time" rowspan="2">07:30 — 08:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">2</td><td class="class-time" rowspan="2">08:20 — 09:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td colspan="7" class="seperate-class-cell">课 间 操 (9:00 — 9:25)</td></tr>
+                
+                <tr><td rowspan="2">3</td><td class="class-time" rowspan="2">09:25 — 10:05</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">4</td><td class="class-time" rowspan="2">10:15 — 10:55</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">5</td><td class="class-time" rowspan="2">11:05 — 11:45</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td colspan="8" class="seperate-class-cell">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;午 休 (12:00 — 14:30)</td></tr>
+                
+                <tr><th rowspan="6">下午</th><td rowspan="2">6</td><td class="class-time" rowspan="2">14:40 — 15:20</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">7</td><td class="class-time" rowspan="2">15:30 — 16:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">8</td><td class="class-time" rowspan="2">16:30 — 17:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+        
+        <p></p>
+        
+        <table id="course-table-2">
+            <caption>初一(2)班课程安排表（排课用）</caption>
+            <thead>
+                <tr><th>时段</th><th>课序</th><th>时间</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th></tr>
+            </thead>
+            <tbody>
+                <tr><th rowspan="11">上午</th><td rowspan="2">1</td><td class="class-time" rowspan="2">07:30 — 08:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">2</td><td class="class-time" rowspan="2">08:20 — 09:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td colspan="7" class="seperate-class-cell">课 间 操 (9:00 — 9:25)</td></tr>
+                
+                <tr><td rowspan="2">3</td><td class="class-time" rowspan="2">09:25 — 10:05</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">4</td><td class="class-time" rowspan="2">10:15 — 10:55</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">5</td><td class="class-time" rowspan="2">11:05 — 11:45</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td colspan="8" class="seperate-class-cell">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;午 休 (12:00 — 14:30)</td></tr>
+                
+                <tr><th rowspan="6">下午</th><td rowspan="2">6</td><td class="class-time" rowspan="2">14:40 — 15:20</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">7</td><td class="class-time" rowspan="2">15:30 — 16:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td rowspan="2">8</td><td class="class-time" rowspan="2">16:30 — 17:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="teacher"><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+        
+        
+        
+        <p></p>
+        
+        
+        
+<!--        <table>
+            <caption>初一(1)班课程安排表（学生用 — 空表）</caption>
+            <thead>
+                <tr><th>时段</th><th>课序</th><th>时间</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th></tr>
+            </thead>
+            <tbody>
+                <tr><th rowspan="6">上午</th><td>1</td><td class="class-time">07:30 — 08:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>2</td><td class="class-time">08:20 — 09:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td colspan="7" class="seperate-class-cell">课 间 操 (9:00 — 9:30)</td></tr>
+                <tr><td>3</td><td class="class-time">09:30 — 10:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>4</td><td class="class-time">10:20 — 11:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>5</td><td class="class-time">11:10 — 11:50</td><td></td><td></td><td></td><td></td><td></td></tr>
+                
+                <tr><td colspan="8" class="seperate-class-cell">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;午 休 (12:00 — 14:30)</td></tr>
+                
+                <tr><th rowspan="3">下午</th><td>6</td><td class="class-time">14:40 — 15:20</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>7</td><td class="class-time">15:30 — 16:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>8</td><td class="class-time">16:30 — 17:10</td><td></td><td></td><td></td><td></td><td></td></tr>
+                
+            </tbody>
+        </table>-->
+    </body>
+</html>
