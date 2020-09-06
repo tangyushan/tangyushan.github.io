@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>成绩查询</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+
+        <link rel="stylesheet" href="css/style.css">
+
+        <script type="text/javascript" src="js/xlsx.full.min.js"></script>
+        
+        <script type="text/javascript">
+            function init() {
+                checkAuthority();
+                retrieveData();
+            }
+            
+            function checkAuthority() {
+                if (sessionStorage.username === undefined) {
+                    window.location.href = "login.html";
+                }
+            }
+            
+            function retrieveData() {
+                var url = "data/19-20下学期5月月考成绩分析表.xlsx";
+                
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.responseType = "arraybuffer";
+                
+                xhr.onload = function(e) {
+                    var data = new Uint8Array(xhr.response);
+                    var workbook = XLSX.read(data, {type: "array"});
+                    onOpenWorkBook(workbook);
+                };
+                
+                xhr.send();
+            }
+            
+            function onOpenWorkBook(wb) {
+                var sheet = wb.Sheets["总表"];
+                
+                var select = document.createElement("select");
+                
+                for (var i = 2; i <= 314; i++) {
+                    var id = sheet["A"+i].v;
+                    var name = sheet["B"+i].v.replace(/\s*/g, "");
+                    
+                    var option = document.createElement("option");
+                    option.setAttribute("value", id);
+                    option.textContent = name;
+                    
+                    select.appendChild(option);
+                }
+                
+                var title = document.querySelector("h1");
+                //document.body.insertBefore(select, title.nextSibling);
+                
+                var htmlout = document.getElementById("htmlout");
+                
+                htmlout.innerHTML = XLSX.utils.sheet_to_html(wb.Sheets["总表"]);
+            }
+            
+            window.addEventListener("DOMContentLoaded", init);
+        </script>
+    </head>
+    <body>
+        <h1>成绩查询</h1>
+        <form>
+            <label>班级</label>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <label>姓名</label>
+            <select>
+                <option>aaa</option>
+                <option>bbb</option>
+                <option>ccc</option>
+            </select>
+        </form>
+        <div id="htmlout"></div>
+    </body>
+</html>
