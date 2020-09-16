@@ -8,9 +8,15 @@
         
         <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
 
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="../css/style.css">
 
-        <script type="text/javascript" src="js/xlsx.full.min.js"></script>
+        <script type="text/javascript" src="../js/xlsx.full.min.js"></script>
+        
+        <style type="text/css">
+            table tr:nth-child(n+3) td {
+                text-align: right;
+            }
+        </style>
         
         <script type="text/javascript">
             function init() {
@@ -19,13 +25,13 @@
             }
             
             function checkAuthority() {
-                if (sessionStorage.username === undefined) {
+                if (sessionStorage.schoolId === undefined) {
                     window.location.href = "login.html";
                 }
             }
             
             function retrieveData() {
-                var url = "data/19-20下学期5月月考成绩分析表.xlsx";
+                var url = "../data/19-20下学期5月月考成绩分析表.xlsx";
                 
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
@@ -41,27 +47,81 @@
             }
             
             function onOpenWorkBook(wb) {
+                var schoolId = parseInt(sessionStorage.schoolId);
+                
                 var sheet = wb.Sheets["总表"];
                 
-                var select = document.createElement("select");
+                var titles = [];
+                var values = [];
                 
                 for (var i = 2; i <= 314; i++) {
                     var id = sheet["A"+i].v;
-                    var name = sheet["B"+i].v.replace(/\s*/g, "");
                     
-                    var option = document.createElement("option");
-                    option.setAttribute("value", id);
-                    option.textContent = name;
-                    
-                    select.appendChild(option);
+                    if (schoolId === id) {
+                        titles.push(sheet["A1"].v);
+                        titles.push(sheet["B1"].v);
+                        titles.push(sheet["C1"].v);
+                        titles.push(sheet["D1"].v);
+                        titles.push(sheet["E1"].v);
+                        
+                        titles.push(sheet["F1"].v);
+                        titles.push(sheet["G1"].v);
+                        titles.push(sheet["H1"].v);
+                        titles.push(sheet["I1"].v);
+                        titles.push(sheet["J1"].v);
+                        
+                        titles.push(sheet["K1"].v.replace(/\n/g, ""));
+                        titles.push(sheet["L1"].v.replace(/\n/g, ""));
+                        titles.push(sheet["M1"].v.replace(/\n/g, ""));
+                        titles.push(sheet["N1"].v.replace(/\n/g, ""));
+                        titles.push(sheet["O1"].v.replace(/\n/g, ""));
+                        
+                        titles.push(sheet["P1"].v.replace(/\n/g, ""));
+                        titles.push(sheet["Q1"].v.replace(/\n/g, ""));
+                        titles.push(sheet["R1"].v.replace(/\n/g, ""));
+                        titles.push(sheet["S1"].v.replace(/\n/g, ""));
+                        
+                        values.push(sheet["A"+i].v);
+                        values.push(sheet["B"+i].v);
+                        values.push(sheet["C"+i].v);
+                        values.push(sheet["D"+i].v);
+                        values.push(sheet["E"+i].v);
+                        
+                        values.push(sheet["F"+i].v);
+                        values.push(sheet["G"+i].v);
+                        values.push(sheet["H"+i].v);
+                        values.push(sheet["I"+i].v);
+                        values.push(sheet["J"+i].v);
+                        
+                        values.push(sheet["K"+i].v);
+                        values.push(sheet["L"+i].v);
+                        values.push(sheet["M"+i].v);
+                        values.push(sheet["N"+i].v);
+                        values.push(sheet["O"+i].v);
+                        
+                        values.push(sheet["P"+i].v);
+                        values.push(sheet["Q"+i].v);
+                        values.push(sheet["R"+i].v);
+                        values.push(sheet["S"+i].v);
+                        
+                        break;
+                    }
                 }
                 
-                var title = document.querySelector("h1");
-                //document.body.insertBefore(select, title.nextSibling);
+                var tbody = document.getElementById("output");
                 
-                var htmlout = document.getElementById("htmlout");
-                
-                htmlout.innerHTML = XLSX.utils.sheet_to_html(wb.Sheets["总表"]);
+                for (var i = 0; i < titles.length; i++) {
+                    var tr = document.createElement("tr");
+                    var th = document.createElement("th");
+                    var td = document.createElement("td");
+
+                    th.textContent = titles[i];
+                    td.textContent = values[i];
+
+                    tr.appendChild(th);
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
+                }
             }
             
             window.addEventListener("DOMContentLoaded", init);
@@ -69,20 +129,10 @@
     </head>
     <body>
         <h1>成绩查询</h1>
-        <form>
-            <label>班级</label>
-            <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
-            <label>姓名</label>
-            <select>
-                <option>aaa</option>
-                <option>bbb</option>
-                <option>ccc</option>
-            </select>
-        </form>
-        <div id="htmlout"></div>
+        
+        <table>
+            <tbody id="output">
+            </tbody>
+        </table>
     </body>
 </html>

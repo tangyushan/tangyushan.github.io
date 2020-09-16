@@ -6,6 +6,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
+        <script type="text/javascript" src="../js/xlsx.full.min.js"></script>
+        
         <style>
             h1 {
                 color: green;
@@ -54,6 +56,10 @@
                 width: 250px;
                 margin: auto auto;
             }
+            
+            #errorMsg {
+                color: red;
+            }
         </style>
         
         <script type="text/javascript">
@@ -63,7 +69,7 @@
                 //document.getElementById("loginForm").addEventListener("invalid", logValue);
                 
                 //var idInput = document.getElementById("schoolId");
-                console.log(userName.checkValidity());
+                //console.log(userName.checkValidity());
             }
             
             function invalidHandler(evt) {
@@ -84,14 +90,62 @@
                 }
             }
             
-//            function onSubmit() {
-//                var name = document.getElementById("name").value;
-//                var password = document.getElementById("password").value;
-//                
-//                console.log(name, password);
-//                
-//                return false;
-//            }
+
+            function doLogin() {
+                var schoolId = document.getElementById("schoolId").value;
+                
+                if (schoolId === "") {
+                    document.getElementById("errorMsg").innerHTML = "学号不对，请输入正确的学号";
+                    return;
+                }
+                
+                var url = "../data/users.xlsx";
+                
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.responseType = "arraybuffer";
+                
+                xhr.onload = function(e) {
+                    var data = new Uint8Array(xhr.response);
+                    var workbook = XLSX.read(data, {type: "array"});
+                    onOpenWorkBook(workbook);
+                };
+                
+                xhr.send();
+                
+                return false;
+            }
+            
+            function onOpenWorkBook(wb) {
+                var schoolId = parseInt(document.getElementById("schoolId").value);
+                var password = document.getElementById("password").value;
+                
+                // console.log(typeof schoolId, typeof password);
+                
+                var sheet = wb.Sheets["总表"];
+                
+                for (var i = 2; i <= 314; i++) {
+                    var id = sheet["A"+i].v;
+                    
+                    if (id === schoolId) {
+                        var pass = sheet["C"+i].v + "";
+                        
+                        if (pass === password) {
+                            sessionStorage.schoolId = schoolId;
+                            window.location.href = "index.html";
+                        } else {
+                            document.getElementById("errorMsg").innerHTML = "密码不符，请重新输入";
+                            document.getElementById("password").select();
+                            document.getElementById("password").focus();
+                            return;
+                        }
+                    }
+                }
+                
+                document.getElementById("errorMsg").innerHTML = "没有此学号";
+                document.getElementById("schoolId").select();
+                document.getElementById("schoolId").focus();
+            }
             
             window.addEventListener("DOMContentLoaded", init, false);
         </script>
@@ -100,7 +154,7 @@
         <h1>请登录</h1>
         <div>
             <form action="#" method="get" id="loginForm">
-                <label>班级</label>
+<!--                <label>班级</label>
                 <select>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -110,20 +164,23 @@
                     <option value="6">6</option>
                     <option value="7">7</option>
                     <option value="8">8</option>
-                </select>
+                </select>-->
                 
                 <label>学号</label>
-                <input type="text" id="schoolId" oninput="check(this)" placeholder="学号格式: 19XXXX" required="required" pattern="19\d{4}" />
+                <input type="text" id="schoolId" placeholder="学号格式: 19XXXX" required="required" pattern="19\d{4}" value = "190102" />
+                <!--<input type="text" id="schoolId" placeholder="学号格式: 19XXXX" required="required" value = "190102"/>-->
                 
-                <label>姓名</label>
-                <input type="text" id="userName" placeholder="请输入姓名" required="required" />
+<!--                <label>姓名</label>
+                <input type="text" id="userName" placeholder="请输入姓名" required="required" />-->
                 
                 <label>密码</label>
                 <input type="password" id="password" placeholder="请输入密码" required="required" />
                 
-                <input type="submit" id="submitButton"  value="登  录" />
+                <p id="errorMsg"></p>
+                
+                <input type="submit" id="submitButton" onclick="return doLogin();" value="登  录" />
             </form>
-            <p id="log"></p>
+            
         </div>
     </body>
 </html>
