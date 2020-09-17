@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>成绩查询</title>
+        <title>学生成绩查询</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
@@ -13,7 +13,27 @@
         <script type="text/javascript" src="../js/xlsx.full.min.js"></script>
         
         <style type="text/css">
+            table {
+                margin: 2em auto;
+            }
+            
             table tr:nth-child(n+3) td {
+                text-align: right;
+            }
+            
+            table tr:nth-child(n+3) td:last-child {
+                color: #ccc;
+            }
+            
+            table th, table td {
+                width: 70px;
+            }
+            
+            table tfoot {
+                background: #B5D7D8;
+            }
+            
+            table tfoot td {
                 text-align: right;
             }
         </style>
@@ -51,88 +71,150 @@
                 
                 var sheet = wb.Sheets["总表"];
                 
-                var titles = [];
-                var values = [];
+                var record = {
+                    学号: "",
+                    姓名: "",
+                    
+                    语文: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    },
+                    
+                    数学: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    },
+                    
+                    英语: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    },
+                    
+                    政治: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    },
+                    
+                    历史: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    },
+                    
+                    地理: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    },
+                    
+                    生物: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    },
+                    
+                    总分: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    }
+                };
                 
                 for (var i = 2; i <= 314; i++) {
                     var id = sheet["A"+i].v;
                     
                     if (schoolId === id) {
-                        titles.push(sheet["A1"].v);
-                        titles.push(sheet["B1"].v);
-                        titles.push(sheet["C1"].v);
-                        titles.push(sheet["D1"].v);
-                        titles.push(sheet["E1"].v);
+                        record.学号 = sheet["A"+i].v;
+                        record.姓名 = sheet["B"+i].v;
+                        record.语文.分数 = sheet["C"+i].v;
+                        record.数学.分数 = sheet["D"+i].v;
+                        record.英语.分数 = sheet["E"+i].v;
+                        record.政治.分数 = sheet["F"+i].v;
+                        record.历史.分数 = sheet["G"+i].v;
+                        record.地理.分数 = sheet["H"+i].v;
+                        record.生物.分数 = sheet["I"+i].v;
+                        record.总分.分数 = sheet["J"+i].v;
+                        record.总分.年级排名 = sheet["K"+i].v;
+                        record.总分.班级排名 = sheet["L"+i].v;
                         
-                        titles.push(sheet["F1"].v);
-                        titles.push(sheet["G1"].v);
-                        titles.push(sheet["H1"].v);
-                        titles.push(sheet["I1"].v);
-                        titles.push(sheet["J1"].v);
-                        
-                        titles.push(sheet["K1"].v.replace(/\n/g, ""));
-                        titles.push(sheet["L1"].v.replace(/\n/g, ""));
-                        titles.push(sheet["M1"].v.replace(/\n/g, ""));
-                        titles.push(sheet["N1"].v.replace(/\n/g, ""));
-                        titles.push(sheet["O1"].v.replace(/\n/g, ""));
-                        
-                        titles.push(sheet["P1"].v.replace(/\n/g, ""));
-                        titles.push(sheet["Q1"].v.replace(/\n/g, ""));
-                        titles.push(sheet["R1"].v.replace(/\n/g, ""));
-                        titles.push(sheet["S1"].v.replace(/\n/g, ""));
-                        
-                        values.push(sheet["A"+i].v);
-                        values.push(sheet["B"+i].v);
-                        values.push(sheet["C"+i].v);
-                        values.push(sheet["D"+i].v);
-                        values.push(sheet["E"+i].v);
-                        
-                        values.push(sheet["F"+i].v);
-                        values.push(sheet["G"+i].v);
-                        values.push(sheet["H"+i].v);
-                        values.push(sheet["I"+i].v);
-                        values.push(sheet["J"+i].v);
-                        
-                        values.push(sheet["K"+i].v);
-                        values.push(sheet["L"+i].v);
-                        values.push(sheet["M"+i].v);
-                        values.push(sheet["N"+i].v);
-                        values.push(sheet["O"+i].v);
-                        
-                        values.push(sheet["P"+i].v);
-                        values.push(sheet["Q"+i].v);
-                        values.push(sheet["R"+i].v);
-                        values.push(sheet["S"+i].v);
-                        
+                        record.语文.年级排名 = sheet["M"+i].v;
+                        record.数学.年级排名 = sheet["N"+i].v;
+                        record.英语.年级排名 = sheet["O"+i].v;
+                        record.政治.年级排名 = sheet["P"+i].v;
+                        record.历史.年级排名 = sheet["Q"+i].v;
+                        record.地理.年级排名 = sheet["R"+i].v;
+                        record.生物.年级排名 = sheet["S"+i].v;
+
                         break;
                     }
                 }
                 
-                var tbody = document.getElementById("output");
+                var table = document.getElementsByTagName("table")[0];
+                var tbody = table.tBodies[0];
                 
-                for (var i = 0; i < titles.length; i++) {
-                    var tr = document.createElement("tr");
-                    var th = document.createElement("th");
-                    var td = document.createElement("td");
-
-                    th.textContent = titles[i];
-                    td.textContent = values[i];
-
-                    tr.appendChild(th);
-                    tr.appendChild(td);
-                    tbody.appendChild(tr);
-                }
+                tbody.rows[0].cells[1].textContent = record.学号;
+                tbody.rows[1].cells[1].textContent = record.姓名;
+                
+                tbody.rows[3].cells[1].textContent = record.语文.分数;
+                tbody.rows[3].cells[2].textContent = record.语文.年级排名;
+                tbody.rows[3].cells[3].textContent = "N/A";
+                
+                tbody.rows[4].cells[1].textContent = record.数学.分数;
+                tbody.rows[4].cells[2].textContent = record.数学.年级排名;
+                tbody.rows[4].cells[3].textContent = "N/A";
+                
+                tbody.rows[5].cells[1].textContent = record.英语.分数;
+                tbody.rows[5].cells[2].textContent = record.英语.年级排名;
+                tbody.rows[5].cells[3].textContent = "N/A";
+                
+                tbody.rows[6].cells[1].textContent = record.政治.分数;
+                tbody.rows[6].cells[2].textContent = record.政治.年级排名;
+                tbody.rows[6].cells[3].textContent = "N/A";
+                
+                tbody.rows[7].cells[1].textContent = record.历史.分数;
+                tbody.rows[7].cells[2].textContent = record.历史.年级排名;
+                tbody.rows[7].cells[3].textContent = "N/A";
+                
+                tbody.rows[8].cells[1].textContent = record.地理.分数;
+                tbody.rows[8].cells[2].textContent = record.地理.年级排名;
+                tbody.rows[8].cells[3].textContent = "N/A";
+                
+                tbody.rows[9].cells[1].textContent = record.生物.分数;
+                tbody.rows[9].cells[2].textContent = record.生物.年级排名;
+                tbody.rows[9].cells[3].textContent = "N/A";
+                
+                var tfoot = table.tFoot;
+                tfoot.rows[0].cells[1].textContent = record.总分.分数;
+                tfoot.rows[0].cells[2].textContent = record.总分.年级排名;
+                tfoot.rows[0].cells[3].textContent = record.总分.班级排名;
             }
             
             window.addEventListener("DOMContentLoaded", init);
         </script>
     </head>
     <body>
-        <h1>成绩查询</h1>
-        
         <table>
-            <tbody id="output">
+            <caption>学生成绩查询</caption>
+            <tbody>
+                <tr><th>学号</th><td colspan="3"></td></tr>
+                <tr><th>姓名</th><td colspan="3"></td></tr>
+                <tr><th>科目</th><th>分数</th><th>年级排名</th><th>班级排名</th></tr>
+                <tr><th>语文</th><td></td><td></td><td></td></tr>
+                <tr><th>数学</th><td></td><td></td><td></td></tr>
+                <tr><th>英语</th><td></td><td></td><td></td></tr>
+                <tr><th>政治</th><td></td><td></td><td></td></tr>
+                <tr><th>历史</th><td></td><td></td><td></td></tr>
+                <tr><th>地理</th><td></td><td></td><td></td></tr>
+                <tr><th>生物</th><td></td><td></td><td></td></tr>
             </tbody>
+            <tfoot>
+                <tr><th>总分</th><td></td><td></td><td></td></tr>
+            </tfoot>
         </table>
+            
     </body>
 </html>

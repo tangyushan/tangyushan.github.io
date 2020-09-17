@@ -75,11 +75,11 @@ table td p {
     text-indent: 0;
 }
 
-table tr:nth-child(odd) td {
+table tbody tr:nth-child(odd) td {
     background-color: #eee;
 }
 
-table tr:nth-child(even) td {
+table tbody tr:nth-child(even) td {
     background-color: #ddd;
 }
 
