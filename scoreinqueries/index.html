@@ -13,6 +13,23 @@
         <script type="text/javascript" src="../js/xlsx.full.min.js"></script>
         
         <style type="text/css">
+            div {
+                width: 250px;
+                margin: auto auto;
+            }
+            
+            select {
+                width: 100%;
+                padding: auto auto;
+                margin: 8px 0;
+                
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                
+                height: 2em;
+            }
+            
             table {
                 margin: 2em auto;
             }
@@ -45,7 +62,7 @@
         <script type="text/javascript">
             function init() {
                 checkAuthority();
-                retrieveData();
+                //retrieveData();
             }
             
             function checkAuthority() {
@@ -54,9 +71,15 @@
                 }
             }
             
-            function retrieveData() {
-                var url = "../data/19-20下学期5月月考成绩分析表.xlsx";
-                
+            function query(sender) {
+                if (sender.value !== "0") {
+                    var url = "../data/19-20下学期" + sender.value + "月月考成绩分析表.xlsx";
+                    retrieveData(url);
+                    document.getElementsByTagName("table")[0].caption.textContent = "2020-2021学年度" + sender.value + "月月考成绩";
+                }
+            }
+            
+            function retrieveData(url) {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
                 xhr.responseType = "arraybuffer";
@@ -201,8 +224,17 @@
         </script>
     </head>
     <body>
+        <div>
+            <form>
+                <select id="month" onchange="query(this)">
+                    <option value="0">请选择时间：</option>
+                    <option value="5">5月月考成绩</option>
+                    <option value="7">7月月考成绩</option>
+                </select>
+            </form>
+        </div>
         <table>
-            <caption>2020-2021学年度5月月考成绩查询</caption>
+            <caption>月考成绩</caption>
             <tbody>
                 <tr><th>学号</th><td colspan="3"></td></tr>
                 <tr><th>姓名</th><td colspan="3"></td></tr>
