@@ -13,6 +13,13 @@
         <script type="text/javascript" src="../js/xlsx.full.min.js"></script>
         
         <style type="text/css">
+            img {
+                width: 65px;
+                height: 50px;
+                margin: auto 430px;
+                float: right;
+            }
+            
             div {
                 width: 250px;
                 margin: auto auto;
@@ -62,6 +69,7 @@
         <script type="text/javascript">
             function init() {
                 checkAuthority();
+                
                 //retrieveData();
             }
             
@@ -91,9 +99,11 @@
                 };
                 
                 xhr.send();
+                document.getElementsByTagName("img")[0].hidden = "";
             }
             
             function onOpenWorkBook(wb) {
+                document.getElementsByTagName("img")[0].hidden = "hidden";
                 var schoolId = parseInt(sessionStorage.schoolId);
                 
                 var sheet = wb.Sheets["总表"];
@@ -233,6 +243,7 @@
                 </select>
             </form>
         </div>
+        <img src="../imgs/loading.gif" alt="loading" hidden="hidden" />
         <table>
             <caption>月考成绩</caption>
             <tbody>
@@ -251,6 +262,7 @@
                 <tr><th>总分</th><td></td><td></td><td></td></tr>
             </tfoot>
         </table>
-            
+        
+        
     </body>
 </html>

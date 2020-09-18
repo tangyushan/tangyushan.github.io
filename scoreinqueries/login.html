@@ -134,6 +134,7 @@
                         if (pass === password) {
                             sessionStorage.schoolId = schoolId;
                             window.location.href = "index.html";
+                            return;
                         } else {
                             document.getElementById("errorMsg").innerHTML = "密码不符，请重新输入";
                             document.getElementById("password").select();
