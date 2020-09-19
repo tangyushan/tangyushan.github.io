@@ -97,6 +97,15 @@
                             fileName = "19-20下学期期考成绩(（语数外120分）";
                             tableTitle = "2019-2020学年度下学期期考成绩";
                             break;
+                            case "4":
+                            fileName = "19-20上1月期考成绩";
+                            tableTitle = "2019-2020学年度上学期期考成绩";
+                            break;
+                            case "5":
+                            fileName = "19-20上12月月考成绩";
+                            tableTitle = "2019-2020学年度上学期12月月考成绩";
+                            break;
+                           
                     }
                     
                     var url = "../data/" + fileName + ".xlsx";
@@ -254,12 +263,15 @@
     <body>
         <div>
             <form>
-                <select id="month" onchange="query(this)">
+               <select id="month" onchange="query(this)">
                     <option value="0">请选择时间：</option>
-                    <option value="1">5月月考成绩</option>
-                    <option value="2">7月月考成绩</option>
-                    <option value="3">期考成绩</option>
+                    <option value="1">2019-2020下学期5月月考成绩</option>
+                    <option value="2">2019-2020下学期7月月考成绩</option>
+                    <option value="3">2019-2020下学期期考成绩</option>
+                    <option value="4">2019-2020上学期期考成绩</option>
+                     <option value="5">2019-2020上学期12月月考成绩</option>
                 </select>
+            </form> 
             </form>
         </div>
         <img src="../imgs/loading.gif" alt="loading" hidden="hidden" />
