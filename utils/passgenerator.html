@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Password Generator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script type="text/javascript">
+            function init() {
+                var output = document.getElementById("output");
+                
+                for (var i = 1; i <= 313; i++) {
+                    var password = genPass(6);
+                    output.value += password + (i === 313 ? "" : "\n");
+                }
+            }
+            
+            function genPass(passNum) {
+                var charsNum = "1234567890";
+                var charsAlpha1 = getRangeChars("A", "Z");
+                var charsAlpha2 = getRangeChars("a", "z");
+                var charsSpecial = "~!@#$%^&*";
+
+                //var passCharsRange = charsNum + charsAlpha1 + charsAlpha2 + charsSpecial;
+                var passCharsRange = charsNum + charsAlpha1 + charsAlpha2;
+
+                var indexLowerBound = 0;
+                var indexUpperBound = passCharsRange.length - 1;
+                
+                var passChars = "";
+                
+                for (var i = 1; i <= passNum; i++) {
+                    var passCharIndex = getRandomRangeInt(indexLowerBound, indexUpperBound);
+                    var char = passCharsRange[passCharIndex];
+                    passChars += char;
+                }
+                
+                return passChars;
+            }
+
+            function getRandomRangeInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min + 1) + min);
+            }
+
+            function getRangeChars(charStart, charEnd) {
+                var charCodeStart = charStart.charCodeAt(0);
+                var charCodeEnd = charEnd.charCodeAt(0);
+
+                var chars = "";
+
+                for (var i = charCodeStart; i <= charCodeEnd; i++) {
+                    var char = String.fromCharCode(i);
+                    chars += char;
+                }
+
+                return chars;
+            }
+
+            window.addEventListener("load", init);
+        </script>
+    </head>
+    <body>
+        <h1>Password Generator</h1>
+        <textarea id="output" rows="30" cols="50"></textarea>
+    </body>
+</html>
