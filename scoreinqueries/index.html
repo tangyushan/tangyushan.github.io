@@ -5,13 +5,13 @@
         <title>学生成绩查询</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
 
         <link rel="stylesheet" href="../css/style.css">
 
         <script type="text/javascript" src="../js/xlsx.full.min.js"></script>
-        
+
         <style type="text/css">
             img {
                 width: 65px;
@@ -19,248 +19,264 @@
                 margin: auto 430px;
                 float: right;
             }
-            
+
             div {
                 width: 250px;
                 margin: auto auto;
             }
-            
+
             select {
                 width: 100%;
                 padding: auto auto;
                 margin: 8px 0;
-                
+
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 box-sizing: border-box;
-                
+
                 height: 2em;
             }
-            
+
             table {
                 margin: 2em auto;
             }
-            
+
             table caption {
                 font-size: 120%;
             }
-            
+
             table tr:nth-child(n+3) td {
                 text-align: right;
             }
-            
+
             table tr:nth-child(n+3) td:last-child {
                 color: #ccc;
             }
-            
+
             table th, table td {
                 width: 70px;
             }
-            
+
             table tfoot {
                 background: #B5D7D8;
             }
-            
+
             table tfoot td {
                 text-align: right;
             }
         </style>
-        
+
         <script type="text/javascript">
+            var 成绩表 = [
+                {
+                    选择框标题: "2019-2020学年度下学期5月月考成绩",
+                    电子表文件: "19-20下学期5月月考成绩分析表"
+                },
+                {
+                    选择框标题: "2019-2020学年度下学期7月月考成绩",
+                    电子表文件: "19-20下学期7月月考成绩分析表"
+                },
+                {
+                    选择框标题: "2019-2020学年度下学期期考成绩",
+                    电子表文件: "19-20下学期期考成绩(（语数外120分）"
+                },
+                
+                
+                
+            ];
+            
+            
+            
             function init() {
                 checkAuthority();
                 
+                process();
+
                 //retrieveData();
             }
-            
+
             function checkAuthority() {
                 if (sessionStorage.schoolId === undefined) {
                     window.location.href = "login.html";
                 }
             }
             
+            function process() {
+                var select = document.getElementById("month");
+                
+                for (var index in 成绩表) {
+                    var option = document.createElement("option");
+                    option.setAttribute("value", parseInt(index) + 1);
+                    option.textContent = 成绩表[index].选择框标题;
+                    select.appendChild(option);
+                }
+            }
+
             function query(sender) {
                 if (sender.value !== "0") {
-                    var fileName = "";
-                    var tableTitle = "";
-                    
-                    switch (sender.value) {
-                        case "1":
-                            fileName = "19-20下学期5月月考成绩分析表";
-                            tableTitle = "2019-2020学年度下学期5月月考成绩";
-                            break;
-                        case "2":
-                            fileName = "19-20下学期7月月考成绩分析表";
-                            tableTitle = "2019-2020学年度下学期7月月考成绩";
-                            break;
-                        case "3":
-                            fileName = "19-20下学期期考成绩(（语数外120分）";
-                            tableTitle = "2019-2020学年度下学期期考成绩";
-                            break; 
-                           
-                    }
-                    
+                    var fileName = 成绩表[parseInt(sender.value) - 1].电子表文件;
+                    var tableTitle = 成绩表[parseInt(sender.value) - 1].选择框标题;
+
                     var url = "../data/" + fileName + ".xlsx";
                     retrieveData(url);
                     document.getElementsByTagName("table")[0].caption.textContent = tableTitle;
                 }
             }
-            
+
             function retrieveData(url) {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
                 xhr.responseType = "arraybuffer";
-                
-                xhr.onload = function(e) {
+
+                xhr.onload = function (e) {
                     var data = new Uint8Array(xhr.response);
                     var workbook = XLSX.read(data, {type: "array"});
                     onOpenWorkBook(workbook);
                 };
-                
+
                 xhr.send();
                 document.getElementsByTagName("img")[0].hidden = "";
             }
-            
+
             function onOpenWorkBook(wb) {
                 document.getElementsByTagName("img")[0].hidden = "hidden";
                 var schoolId = parseInt(sessionStorage.schoolId);
-                
+
                 var sheet = wb.Sheets["总表"];
-                
+
                 var record = {
                     学号: "",
                     姓名: "",
-                    
+
                     语文: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     },
-                    
+
                     数学: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     },
-                    
+
                     英语: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     },
-                    
+
                     政治: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     },
-                    
+
                     历史: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     },
-                    
+
                     地理: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     },
-                    
+
                     生物: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     },
-                    
+
                     总分: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     }
                 };
-                
+
                 for (var i = 2; i <= 314; i++) {
-                    var id = sheet["A"+i].v;
-                    
+                    var id = sheet["A" + i].v;
+
                     if (schoolId === id) {
-                        record.学号 = sheet["A"+i].v;
-                        record.姓名 = sheet["B"+i].v;
-                        record.语文.分数 = sheet["C"+i].v;
-                        record.数学.分数 = sheet["D"+i].v;
-                        record.英语.分数 = sheet["E"+i].v;
-                        record.政治.分数 = sheet["F"+i].v;
-                        record.历史.分数 = sheet["G"+i].v;
-                        record.地理.分数 = sheet["H"+i].v;
-                        record.生物.分数 = sheet["I"+i].v;
-                        record.总分.分数 = sheet["J"+i].v;
-                        record.总分.年级排名 = sheet["K"+i].v;
-                        record.总分.班级排名 = sheet["L"+i].v;
-                        
-                        record.语文.年级排名 = sheet["M"+i].v;
-                        record.数学.年级排名 = sheet["N"+i].v;
-                        record.英语.年级排名 = sheet["O"+i].v;
-                        record.政治.年级排名 = sheet["P"+i].v;
-                        record.历史.年级排名 = sheet["Q"+i].v;
-                        record.地理.年级排名 = sheet["R"+i].v;
-                        record.生物.年级排名 = sheet["S"+i].v;
+                        record.学号 = sheet["A" + i].v;
+                        record.姓名 = sheet["B" + i].v;
+                        record.语文.分数 = sheet["C" + i].v;
+                        record.数学.分数 = sheet["D" + i].v;
+                        record.英语.分数 = sheet["E" + i].v;
+                        record.政治.分数 = sheet["F" + i].v;
+                        record.历史.分数 = sheet["G" + i].v;
+                        record.地理.分数 = sheet["H" + i].v;
+                        record.生物.分数 = sheet["I" + i].v;
+                        record.总分.分数 = sheet["J" + i].v;
+                        record.总分.年级排名 = sheet["K" + i].v;
+                        record.总分.班级排名 = sheet["L" + i].v;
+
+                        record.语文.年级排名 = sheet["M" + i].v;
+                        record.数学.年级排名 = sheet["N" + i].v;
+                        record.英语.年级排名 = sheet["O" + i].v;
+                        record.政治.年级排名 = sheet["P" + i].v;
+                        record.历史.年级排名 = sheet["Q" + i].v;
+                        record.地理.年级排名 = sheet["R" + i].v;
+                        record.生物.年级排名 = sheet["S" + i].v;
 
                         break;
                     }
                 }
-                
+
                 var table = document.getElementsByTagName("table")[0];
                 var tbody = table.tBodies[0];
-                
+
                 tbody.rows[0].cells[1].textContent = record.学号;
                 tbody.rows[1].cells[1].textContent = record.姓名;
-                
+
                 tbody.rows[3].cells[1].textContent = record.语文.分数;
                 tbody.rows[3].cells[2].textContent = record.语文.年级排名;
                 tbody.rows[3].cells[3].textContent = "N/A";
-                
+
                 tbody.rows[4].cells[1].textContent = record.数学.分数;
                 tbody.rows[4].cells[2].textContent = record.数学.年级排名;
                 tbody.rows[4].cells[3].textContent = "N/A";
-                
+
                 tbody.rows[5].cells[1].textContent = record.英语.分数;
                 tbody.rows[5].cells[2].textContent = record.英语.年级排名;
                 tbody.rows[5].cells[3].textContent = "N/A";
-                
+
                 tbody.rows[6].cells[1].textContent = record.政治.分数;
                 tbody.rows[6].cells[2].textContent = record.政治.年级排名;
                 tbody.rows[6].cells[3].textContent = "N/A";
-                
+
                 tbody.rows[7].cells[1].textContent = record.历史.分数;
                 tbody.rows[7].cells[2].textContent = record.历史.年级排名;
                 tbody.rows[7].cells[3].textContent = "N/A";
-                
+
                 tbody.rows[8].cells[1].textContent = record.地理.分数;
                 tbody.rows[8].cells[2].textContent = record.地理.年级排名;
                 tbody.rows[8].cells[3].textContent = "N/A";
-                
+
                 tbody.rows[9].cells[1].textContent = record.生物.分数;
                 tbody.rows[9].cells[2].textContent = record.生物.年级排名;
                 tbody.rows[9].cells[3].textContent = "N/A";
-                
+
                 var tfoot = table.tFoot;
                 tfoot.rows[0].cells[1].textContent = record.总分.分数;
                 tfoot.rows[0].cells[2].textContent = record.总分.年级排名;
                 tfoot.rows[0].cells[3].textContent = record.总分.班级排名;
             }
-            
+
             window.addEventListener("DOMContentLoaded", init);
         </script>
     </head>
     <body>
         <div> 
             <form>
-               <select id="month" onchange="query(this)">
+                <select id="month" onchange="query(this)">
                     <option value="0">请选择考试时间：</option>
-                    <option value="1">2019-2020下学期5月月考成绩</option>
+<!--                    <option value="1">2019-2020下学期5月月考成绩</option>
                     <option value="2">2019-2020下学期7月月考成绩</option>
-                    <option value="3">2019-2020下学期期考成绩</option>
-                   
+                    <option value="3">2019-2020下学期期考成绩</option>-->
                 </select>
             </form> 
         </div>
@@ -283,7 +299,7 @@
                 <tr><th>总分</th><td></td><td></td><td></td></tr>
             </tfoot>
         </table>
-        
-        
+
+
     </body>
 </html>
