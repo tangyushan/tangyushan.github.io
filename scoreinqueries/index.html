@@ -81,9 +81,27 @@
             
             function query(sender) {
                 if (sender.value !== "0") {
-                    var url = "../data/19-20下学期" + sender.value + "月月考成绩分析表.xlsx";
+                    var fileName = "";
+                    var tableTitle = "";
+                    
+                    switch (sender.value) {
+                        case "1":
+                            fileName = "19-20下学期5月月考成绩分析表";
+                            tableTitle = "2019-2020学年度下学期5月月考成绩";
+                            break;
+                        case "2":
+                            fileName = "19-20下学期7月月考成绩分析表";
+                            tableTitle = "2019-2020学年度下学期7月月考成绩";
+                            break;
+                        case "3":
+                            fileName = "19-20下学期期考成绩(（语数外120分）";
+                            tableTitle = "2019-2020学年度下学期期考成绩";
+                            break;
+                    }
+                    
+                    var url = "../data/" + fileName + ".xlsx";
                     retrieveData(url);
-                    document.getElementsByTagName("table")[0].caption.textContent = "2019-2020学年度下学期" + sender.value + "月月考成绩";
+                    document.getElementsByTagName("table")[0].caption.textContent = tableTitle;
                 }
             }
             
@@ -238,8 +256,9 @@
             <form>
                 <select id="month" onchange="query(this)">
                     <option value="0">请选择时间：</option>
-                    <option value="5">5月月考成绩</option>
-                    <option value="7">7月月考成绩</option>
+                    <option value="1">5月月考成绩</option>
+                    <option value="2">7月月考成绩</option>
+                    <option value="3">期考成绩</option>
                 </select>
             </form>
         </div>
