@@ -1,0 +1,56 @@
+/* 
+    Created on : 2020年9月20日, 上午12:49:32
+    Author     : Sarkuya
+*/
+
+img {
+    width: 65px;
+    height: 50px;
+    margin: auto 430px;
+    float: right;
+}
+
+div {
+    width: 250px;
+    margin: auto auto;
+}
+
+select {
+    width: 100%;
+    padding: auto auto;
+    margin: 8px 0;
+
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+    height: 2em;
+}
+
+table {
+    margin: 2em auto;
+}
+
+table caption {
+    font-size: 120%;
+}
+
+table tr:nth-child(n+3) td {
+    text-align: right;
+}
+
+table tr:nth-child(n+3) td:last-child {
+    color: #ccc;
+}
+
+table th, table td {
+    width: 70px;
+}
+
+table tfoot {
+    background: #B5D7D8;
+}
+
+table tfoot td {
+    text-align: right;
+}
