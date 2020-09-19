@@ -89,10 +89,7 @@
             
             function init() {
                 checkAuthority();
-                
-                process();
-
-                //retrieveData();
+                genUI();
             }
 
             function checkAuthority() {
@@ -101,7 +98,7 @@
                 }
             }
             
-            function process() {
+            function genUI() {
                 var select = document.getElementById("month");
                 
                 for (var index in 成绩表) {
@@ -274,9 +271,6 @@
             <form>
                 <select id="month" onchange="query(this)">
                     <option value="0">请选择考试时间：</option>
-<!--                    <option value="1">2019-2020下学期5月月考成绩</option>
-                    <option value="2">2019-2020下学期7月月考成绩</option>
-                    <option value="3">2019-2020下学期期考成绩</option>-->
                 </select>
             </form> 
         </div>
