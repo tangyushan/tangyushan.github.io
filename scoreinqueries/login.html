@@ -156,21 +156,8 @@
         <h1>海口一中(南海)成绩查询</h1>
         <div>
             <form action="#" method="get" id="loginForm">
-<!--                <label>班级</label>
-                <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>-->
-                
                 <label>学号</label>
-                <input type="text" id="schoolId" placeholder="学号格式: 19XXXX" required="required" pattern="19\d{4}" value = "190102" />
-                <!--<input type="text" id="schoolId" placeholder="学号格式: 19XXXX" required="required" value = "190102"/>-->
+                <input type="text" id="schoolId" placeholder="学号格式: 19XXXX" required="required" pattern="19\d{4}" />
                 
 <!--                <label>姓名</label>
                 <input type="text" id="userName" placeholder="请输入姓名" required="required" />-->
@@ -182,7 +169,6 @@
                 
                 <input type="submit" id="submitButton" onclick="return doLogin();" value="登  录" />
             </form>
-            
         </div>
     </body>
 </html>
