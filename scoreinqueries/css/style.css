@@ -54,3 +54,11 @@ table tfoot {
 table tfoot td {
     text-align: right;
 }
+
+table#multiSubjects {
+    display: table;
+}
+
+table#singleSubject {
+    display: none;
+}
