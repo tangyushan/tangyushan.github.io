@@ -113,12 +113,28 @@
                 }
             }
             
+            function getLastRow(sheet) {
+                var rowStart = 2;
+                
+                var rowCurrent = rowStart;
+                var rowEnd = rowStart;
+                
+                while(sheet["A" + rowCurrent]) {
+                    rowEnd = rowCurrent;
+                    rowCurrent++;
+                }
+                
+                return rowEnd;
+            }
+            
             function queryMultiSubject(wb, tableTitle) {
                 document.getElementsByTagName("img")[0].hidden = "hidden";
                 var schoolId = parseInt(sessionStorage.schoolId);
 
                 var sheet = wb.Sheets["总表"];
-
+                
+                var lastRowIndex = getLastRow(sheet);
+                
                 var record = {
                     学号: "",
                     姓名: "",
@@ -164,46 +180,83 @@
                         班级排名: 0,
                         年级排名: 0
                     },
-                     物理: {
+                    
+                    物理: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     },
+                    
                     总分: {
                         分数: 0,
                         班级排名: 0,
                         年级排名: 0
                     }
                 };
+                
+                var is物理 = false;
+                
+                if (sheet["J1"].v === "物理") {
+                    is物理 = true;
+                }
 
-                for (var i = 2; i <= 314; i++) {
+                for (var i = 2; i <= lastRowIndex; i++) {
                     var id = sheet["A" + i].v;
 
                     if (schoolId === id) {
-                        record.学号 = sheet["A" + i].v;
-                        record.姓名 = sheet["B" + i].v;
-                        record.语文.分数 = sheet["C" + i].v;
-                        record.数学.分数 = sheet["D" + i].v;
-                        record.英语.分数 = sheet["E" + i].v;
-                        record.政治.分数 = sheet["F" + i].v;
-                        record.历史.分数 = sheet["G" + i].v;
-                        record.地理.分数 = sheet["H" + i].v;
-                        record.生物.分数 = sheet["I" + i].v;
-                        record.物理.分数 = sheet["J" + i].v;
-                        record.总分.分数 = sheet["K" + i].v;
-                        record.总分.年级排名 = sheet["L" + i].v;
-                        record.总分.班级排名 = sheet["M" + i].v;
+                        if (!is物理) {
+                            record.学号 = sheet["A" + i].v;
+                            record.姓名 = sheet["B" + i].v;
+                            
+                            record.语文.分数 = sheet["C" + i].v;
+                            record.数学.分数 = sheet["D" + i].v;
+                            record.英语.分数 = sheet["E" + i].v;
+                            record.政治.分数 = sheet["F" + i].v;
+                            record.历史.分数 = sheet["G" + i].v;
+                            record.地理.分数 = sheet["H" + i].v;
+                            record.生物.分数 = sheet["I" + i].v;
+                            
+                            record.总分.分数 = sheet["J" + i].v;
+                            record.总分.年级排名 = sheet["K" + i].v;
+                            record.总分.班级排名 = sheet["L" + i].v;
 
-                        record.语文.年级排名 = sheet["N" + i].v;
-                        record.数学.年级排名 = sheet["O" + i].v;
-                        record.英语.年级排名 = sheet["P" + i].v;
-                        record.政治.年级排名 = sheet["Q" + i].v;
-                        record.历史.年级排名 = sheet["R" + i].v;
-                        record.地理.年级排名 = sheet["S" + i].v;
-                        record.生物.年级排名 = sheet["T" + i].v;
-                        record.物理.年级排名 = sheet["U" + i].v;
-                        
-                        break;
+                            record.语文.年级排名 = sheet["M" + i].v;
+                            record.数学.年级排名 = sheet["N" + i].v;
+                            record.英语.年级排名 = sheet["O" + i].v;
+                            record.政治.年级排名 = sheet["P" + i].v;
+                            record.历史.年级排名 = sheet["Q" + i].v;
+                            record.地理.年级排名 = sheet["R" + i].v;
+                            record.生物.年级排名 = sheet["S" + i].v;
+
+                            break;
+                        } else {
+                            record.学号 = sheet["A" + i].v;
+                            record.姓名 = sheet["B" + i].v;
+                            
+                            record.语文.分数 = sheet["C" + i].v;
+                            record.数学.分数 = sheet["D" + i].v;
+                            record.英语.分数 = sheet["E" + i].v;
+                            record.政治.分数 = sheet["F" + i].v;
+                            record.历史.分数 = sheet["G" + i].v;
+                            record.地理.分数 = sheet["H" + i].v;
+                            record.生物.分数 = sheet["I" + i].v;
+                            record.物理.分数 = sheet["J" + i].v;
+                            
+                            record.总分.分数 = sheet["K" + i].v;
+                            record.总分.年级排名 = sheet["L" + i].v;
+                            record.总分.班级排名 = sheet["M" + i].v;
+
+                            record.语文.年级排名 = sheet["N" + i].v;
+                            record.数学.年级排名 = sheet["O" + i].v;
+                            record.英语.年级排名 = sheet["P" + i].v;
+                            record.政治.年级排名 = sheet["Q" + i].v;
+                            record.历史.年级排名 = sheet["R" + i].v;
+                            record.地理.年级排名 = sheet["S" + i].v;
+                            record.生物.年级排名 = sheet["T" + i].v;
+                            record.物理.年级排名 = sheet["U" + i].v;
+
+                            break;
+                        }
                     }
                 }
 
@@ -242,6 +295,38 @@
                 tbody.rows[9].cells[1].textContent = record.生物.分数;
                 tbody.rows[9].cells[2].textContent = record.生物.年级排名;
                 tbody.rows[9].cells[3].textContent = "N/A";
+                
+                if (is物理) {
+                    if (tbody.rows.length === 10) {
+                        var tr = document.createElement("tr");
+                    
+                        var th = document.createElement("th");
+                        th.textContent = "物理";
+                        tr.appendChild(th);
+
+                        var td = document.createElement("td");
+                        td.textContent = record.物理.分数;
+                        tr.appendChild(td);
+
+                        var td = document.createElement("td");
+                        td.textContent = record.物理.年级排名;
+                        tr.appendChild(td);
+
+                        var td = document.createElement("td");
+                        td.textContent = "N/A";
+                        tr.appendChild(td);
+
+                        tbody.appendChild(tr);
+                    } else if (tbody.rows.length === 11) {
+                        tbody.rows[10].cells[1].textContent = record.物理.分数;
+                        tbody.rows[10].cells[2].textContent = record.物理.年级排名;
+                        tbody.rows[10].cells[3].textContent = "N/A";
+                    }
+                }
+                
+                if (!is物理 && tbody.rows.length === 11) {
+                    tbody.removeChild(tbody.rows[10]);
+                }
 
                 var tfoot = table.tFoot;
                 tfoot.rows[0].cells[1].textContent = record.总分.分数;
@@ -254,6 +339,8 @@
                 var schoolId = parseInt(sessionStorage.schoolId);
 
                 var sheet = wb.Sheets["总表"];
+                
+                var lastRowIndex = getLastRow(sheet);
 
                 var record = {
                     学号: "",
@@ -266,7 +353,7 @@
                     年级排名: 0
                 };
 
-                for (var i = 2; i <= 314; i++) {
+                for (var i = 2; i <= lastRowIndex; i++) {
                     var id = sheet["A" + i].v;
 
                     if (schoolId === id) {

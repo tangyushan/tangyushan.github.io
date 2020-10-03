@@ -64,6 +64,8 @@
         </style>
         
         <script type="text/javascript">
+            var 记录尾行 = 316;
+            
             function init() {
                 //document.getElementById("submitbutton").addEventListener("click", onSubmit);
                 
@@ -125,7 +127,7 @@
                 
                 var sheet = wb.Sheets["总表"];
                 
-                for (var i = 2; i <= 316; i++) {
+                for (var i = 2; i <= 记录尾行; i++) {
                     var id = sheet["A"+i].v;
                     
                     if (id === schoolId) {
