@@ -93,7 +93,6 @@
                 }
             }
             
-
             function doLogin() {
                 var schoolId = document.getElementById("schoolId").value;
                 
@@ -119,15 +118,31 @@
                 return false;
             }
             
+            function getLastRow(sheet) {
+                var rowStart = 2;
+                
+                var rowCurrent = rowStart;
+                var rowEnd = rowStart;
+                
+                while(sheet["A" + rowCurrent]) {
+                    rowEnd = rowCurrent;
+                    rowCurrent++;
+                }
+                
+                return rowEnd;
+            }
+            
             function onOpenWorkBook(wb) {
                 var schoolId = parseInt(document.getElementById("schoolId").value);
                 var password = document.getElementById("password").value;
                 
-                // console.log(typeof schoolId, typeof password);
+                var year = (schoolId+"").substring(0, 2);
                 
-                var sheet = wb.Sheets["总表"];
+                var sheet = wb.Sheets["20"+year+"届"];
                 
-                for (var i = 2; i <= 记录尾行; i++) {
+                var lastRowIndex = getLastRow(sheet);
+                
+                for (var i = 2; i <= lastRowIndex; i++) {
                     var id = sheet["A"+i].v;
                     
                     if (id === schoolId) {
@@ -159,13 +174,13 @@
         <div>
             <form action="#" method="get" id="loginForm">
                 <label>学号</label>
-                <input type="text" id="schoolId" placeholder="学号格式: 19XXXX" required="required" pattern="19\d{4}" />
+                <input type="text" id="schoolId" placeholder="学号格式: 19XXXX, 或20XXXX" required="required" pattern="19\d{4}" value="190102" />
                 
 <!--                <label>姓名</label>
                 <input type="text" id="userName" placeholder="请输入姓名" required="required" />-->
                 
                 <label>密码</label>
-                <input type="password" id="password" placeholder="请输入密码" required="required" />
+                <input type="password" id="password" placeholder="请输入密码" required="required" value="748833" />
                 
                 <p id="errorMsg"></p>
                 

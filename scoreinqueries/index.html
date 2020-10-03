@@ -14,7 +14,7 @@
         <script type="text/javascript" src="../js/xlsx.full.min.js"></script>
         
         <script type="text/javascript">
-            var 成绩表 = [
+            var 成绩表2019届 = [
                 {
                     选择框标题: "2019-2020学年度下学期5月月考成绩",
                     电子表文件: "19-20下学期5月月考成绩分析表"
@@ -35,11 +35,22 @@
                     选择框标题: "2020-2021学年度上学期英语M3成绩",
                     电子表文件: "20-21上学期英语M3成绩"
                 },
-              {
+                {
                     选择框标题: "20-21上学期10月月考初二成绩",
                     电子表文件: "20-21上学期10月月考初二成绩"
-                },   
-            ]; 
+                },
+                
+            ];
+            
+            var 成绩表2020届 = [
+                {
+                    选择框标题: "2020-2021学年度上学期10月月考成绩",
+                    电子表文件: "20-21上学期10月月考初一成绩"
+                },
+                
+            ];
+            
+            var 成绩表 = null;
             
             function init() {
                 checkAuthority();
@@ -55,6 +66,12 @@
             function genUI() {
                 var select = document.getElementById("month");
                 
+                if (sessionStorage.schoolId.substring(0, 2) === '19') {
+                    成绩表 = 成绩表2019届;
+                } else if (sessionStorage.schoolId.substring(0, 2) === '20') {
+                    成绩表 = 成绩表2020届;
+                }
+                
                 for (var index in 成绩表) {
                     var option = document.createElement("option");
                     option.setAttribute("value", parseInt(index) + 1);
@@ -67,8 +84,9 @@
                 if (sender.value !== "0") {
                     var fileName = 成绩表[parseInt(sender.value) - 1].电子表文件;
                     var tableTitle = 成绩表[parseInt(sender.value) - 1].选择框标题;
-
-                    var url = "../data/" + fileName + ".xlsx";
+                    
+                    var url = "../data/20" + sessionStorage.schoolId.substring(0, 2) + "届/" + fileName + ".xlsx";
+                    
                     retrieveData(url, fileName, tableTitle);
                 }
             }

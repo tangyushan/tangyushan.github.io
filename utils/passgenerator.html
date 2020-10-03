@@ -8,11 +8,13 @@
 
         <script type="text/javascript">
             function init() {
+                var 学生人数 = 390;
+                
                 var output = document.getElementById("output");
                 
-                for (var i = 1; i <= 313; i++) {
+                for (var i = 1; i <= 学生人数; i++) {
                     var password = genPass(6);
-                    output.value += password + (i === 313 ? "" : "\n");
+                    output.value += password + (i === 学生人数 ? "" : "\n");
                 }
             }
             
