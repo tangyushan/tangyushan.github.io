@@ -35,8 +35,11 @@
                     选择框标题: "2020-2021学年度上学期英语M3成绩",
                     电子表文件: "20-21上学期英语M3成绩"
                 },
-                 
-            ];
+              {
+                    选择框标题: "20-21上学期10月月考初二成绩",
+                    电子表文件: "20-21上学期10月月考初二成绩"
+                },   
+            ]; 
             
             function init() {
                 checkAuthority();
@@ -86,7 +89,7 @@
             }
 
             function onOpenWorkBook(wb, fileName, tableTitle) {
-                var subjectNames = ["语文", "数学", "英语", "政治", "历史", "地理", "生物"];
+                var subjectNames = ["语文", "数学", "英语", "政治", "历史", "地理", "生物", "物理"];
                 
                 var isSingleSubject = false;
                 var subjectName = "";
@@ -161,7 +164,11 @@
                         班级排名: 0,
                         年级排名: 0
                     },
-
+                     物理: {
+                        分数: 0,
+                        班级排名: 0,
+                        年级排名: 0
+                    },
                     总分: {
                         分数: 0,
                         班级排名: 0,
@@ -182,18 +189,20 @@
                         record.历史.分数 = sheet["G" + i].v;
                         record.地理.分数 = sheet["H" + i].v;
                         record.生物.分数 = sheet["I" + i].v;
-                        record.总分.分数 = sheet["J" + i].v;
-                        record.总分.年级排名 = sheet["K" + i].v;
-                        record.总分.班级排名 = sheet["L" + i].v;
+                        record.物理.分数 = sheet["J" + i].v;
+                        record.总分.分数 = sheet["K" + i].v;
+                        record.总分.年级排名 = sheet["L" + i].v;
+                        record.总分.班级排名 = sheet["M" + i].v;
 
-                        record.语文.年级排名 = sheet["M" + i].v;
-                        record.数学.年级排名 = sheet["N" + i].v;
-                        record.英语.年级排名 = sheet["O" + i].v;
-                        record.政治.年级排名 = sheet["P" + i].v;
-                        record.历史.年级排名 = sheet["Q" + i].v;
-                        record.地理.年级排名 = sheet["R" + i].v;
-                        record.生物.年级排名 = sheet["S" + i].v;
-
+                        record.语文.年级排名 = sheet["N" + i].v;
+                        record.数学.年级排名 = sheet["O" + i].v;
+                        record.英语.年级排名 = sheet["P" + i].v;
+                        record.政治.年级排名 = sheet["Q" + i].v;
+                        record.历史.年级排名 = sheet["R" + i].v;
+                        record.地理.年级排名 = sheet["S" + i].v;
+                        record.生物.年级排名 = sheet["T" + i].v;
+                        record.物理.年级排名 = sheet["U" + i].v;
+                        
                         break;
                     }
                 }
