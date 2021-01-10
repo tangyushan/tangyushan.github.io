@@ -227,7 +227,7 @@
 
                 for (var i = 2; i <= lastRowIndex; i++) {
                     var id = sheet["A" + i].v;
-
+                    
                     if (schoolId === id) {
                         if (!is物理) {
                             record.学号 = sheet["A" + i].v;
@@ -289,7 +289,7 @@
                 table.caption.textContent = tableTitle;
                 
                 var tbody = table.tBodies[0];
-
+                
                 tbody.rows[0].cells[1].textContent = record.学号;
                 tbody.rows[1].cells[1].textContent = record.姓名;
 
